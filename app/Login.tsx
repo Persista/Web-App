@@ -26,7 +26,7 @@ export default function Login() {
     if (user) {
       router.replace("/project");
     }
-  }, [user]);
+  }, [user, router]);
 
   if (user) return <Loader />;
 
