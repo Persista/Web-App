@@ -14,7 +14,9 @@ export default function Actions() {
     >
       <h3 className="text-3xl py-8 font-bold">Actions</h3>
 
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-4 mb-40">
+        <Action />
+        <Action />
         <Action />
       </div>
     </Container>
