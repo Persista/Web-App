@@ -6,6 +6,11 @@ import Sidebar from "./components/Sidebar";
 import { useState } from "react";
 import DashboardHeader from "./components/Header";
 import { DRAWER_WIDTH } from "@/app/constants";
+import { useQuery } from "react-query";
+import { get } from "@/utils/API/request";
+import { useContext } from "react";
+import SiteContext from "@/app/siteContext";
+import Loader from "@/app/components/Loader";
 
 interface DashboardLayoutProps {
   children: React.ReactNode;
@@ -16,6 +21,16 @@ interface DashboardLayoutProps {
 
 export default function DashboardLayout({ children, params }: DashboardLayoutProps) {
   let [open, setOpen] = useState(true);
+  const { user } = useContext(SiteContext);
+  const getProject = async () => {
+		const res = await get(`/admin/${user.id}/projects`);
+		return res.data.message;
+	};
+
+  let project = useQuery("project", getProject);
+
+  if(project.isLoading) return <Loader/>
+
   return (
     <Box>
       <Sidebar params={params} open={open} setOpen={setOpen} />
@@ -27,7 +42,7 @@ export default function DashboardLayout({ children, params }: DashboardLayoutPro
           overflow: "auto",
         }}
       >
-        <DashboardHeader open={open} setOpen={setOpen} />
+        <DashboardHeader open={open} setOpen={setOpen}/>
         {children}
       </Box>
     </Box>

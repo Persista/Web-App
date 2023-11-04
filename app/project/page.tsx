@@ -2,14 +2,29 @@
 
 import AddIcon from "@mui/icons-material/Add";
 import { useQuery } from "react-query";
-
+import { useContext } from "react";
+import SiteContext from "@/app/siteContext";
 import { Card, CardActionArea, Container, useTheme } from "@mui/material";
 import Header from "./components/Header";
 import ProjectCard from "./components/Card";
+import { get } from "@/utils/API/request";
+import Loader from "../components/Loader";
+import { Project } from "../types";
 
 export default function Projects() {
   let theme = useTheme();
-  let projects = useQuery([]);
+  const {user} = useContext(SiteContext);
+
+  const getAllProjects = async () => { 
+    const res = await get(`/admin/${user.id}/projects`);
+    console.log(res.data);
+    return res.data.message;
+  }
+
+  let projects = useQuery([user.id, "projects"], getAllProjects);
+
+  if(projects.isLoading) return <Loader/>
+
   return (
     <>
       <Header />
@@ -29,11 +44,9 @@ export default function Projects() {
                 <AddIcon fontSize="small" /> New Project
               </CardActionArea>
             </Card>
-            <ProjectCard />
-            <ProjectCard />
-            <ProjectCard />
-            <ProjectCard />
-            <ProjectCard />
+            {projects.data.map((project: Project) => (
+              <ProjectCard key={project.id} title={project.title} actions={project.actions} id={project.id} />
+            ))}
             <Card variant="outlined" className="hidden md:flex" sx={{ borderColor: theme.palette.primary.main }}>
               <CardActionArea
                 className="h-full flex flex-row gap-2 justify-center items-center"

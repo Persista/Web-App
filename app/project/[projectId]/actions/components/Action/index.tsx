@@ -10,7 +10,7 @@ interface Action {
   firstResponse: string;
 }
 
-export default function Action() {
+export default function Action({id, name, pitch, firstResponse} : Action) {
   let [action, setAction] = useState<Action>({
     id: null,
     name: "",
@@ -23,7 +23,7 @@ export default function Action() {
   return (
     <Card>
       <CardContent className="flex flex-col gap-6">
-        <h4 className="m-0 font-semibold">{action.name || "Untitled Action"}</h4>
+        <h4 className="m-0 font-semibold">{action.name || "Add New Action"}</h4>
         <TextField
           value={action.name}
           onChange={(e) => {
