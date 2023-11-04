@@ -30,10 +30,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   let [user, setUser] = useState(null);
 
   useEffect(() => {
-    console.log(pathname);
     if (typeof window !== "undefined") {
       let token = getLS("token");
-      if (token && user === null) {
+      if (token) {
+        if(user) return;
         get(API.VERIFY).then((res) => {
           if (res.status === 200) {
             setUser(res.data.data);

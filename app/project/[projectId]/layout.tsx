@@ -27,7 +27,7 @@ export default function DashboardLayout({ children, params }: DashboardLayoutPro
 		return res.data.message;
 	};
 
-  let project = useQuery("project", getProject);
+  let project  = useQuery("project", getProject);
 
   if(project.isLoading) return <Loader/>
 
@@ -42,7 +42,7 @@ export default function DashboardLayout({ children, params }: DashboardLayoutPro
           overflow: "auto",
         }}
       >
-        <DashboardHeader open={open} setOpen={setOpen}/>
+        <DashboardHeader open={open} setOpen={setOpen} title={project.data.title}/>
         {children}
       </Box>
     </Box>
