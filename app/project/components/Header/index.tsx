@@ -1,8 +1,13 @@
 "use client";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { AppBar, Toolbar, Button, Avatar, Menu, MenuItem, Container, IconButton } from "@mui/material";
 
+import SiteContext from "@/app/siteContext";
+import { removeLS } from "@/utils/localStorage";
+
 export default function Header() {
+  let { user, setUser } = useContext(SiteContext);
+
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -11,6 +16,15 @@ export default function Header() {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const logout = () => {
+    removeLS("token");
+    setUser?.(null);
+    handleClose();
+  };
+
+  if (!user) return <></>;
+
   return (
     <AppBar position="sticky">
       <Container maxWidth="xl">
@@ -25,8 +39,10 @@ export default function Header() {
             aria-expanded={open ? "true" : undefined}
             onClick={handleClick}
           >
-            <Avatar className="w-6 h-6 mr-2 text-sm">P</Avatar>
-            My Account
+            <Avatar className="w-6 h-6 mr-2 text-sm" src={user.picture || undefined}>
+              {user.name[0]}
+            </Avatar>
+            {user.name}
           </Button>
           <IconButton
             className="md:hidden"
@@ -48,9 +64,7 @@ export default function Header() {
             "aria-labelledby": "profile-button",
           }}
         >
-          <MenuItem onClick={handleClose}>Profile</MenuItem>
-          <MenuItem onClick={handleClose}>My account</MenuItem>
-          <MenuItem onClick={handleClose}>Logout</MenuItem>
+          <MenuItem onClick={logout}>Logout</MenuItem>
         </Menu>
       </Container>
     </AppBar>

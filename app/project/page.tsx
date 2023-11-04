@@ -1,12 +1,15 @@
 "use client";
 
+import AddIcon from "@mui/icons-material/Add";
+import { useQuery } from "react-query";
+
 import { Card, CardActionArea, Container, useTheme } from "@mui/material";
 import Header from "./components/Header";
 import ProjectCard from "./components/Card";
-import AddIcon from "@mui/icons-material/Add";
 
 export default function Projects() {
   let theme = useTheme();
+  let projects = useQuery([]);
   return (
     <>
       <Header />
@@ -18,8 +21,11 @@ export default function Projects() {
         <Container maxWidth="md" className="md:pt-16 pt-8 relative z-10">
           <h3 className="text-white text-xl font-medium mb-2">Projects</h3>
           <div className="grid md:grid-cols-3 gap-2">
-            <Card variant="outlined" className="border-blue-500 md:hidden">
-              <CardActionArea className="h-full flex flex-row gap-2 justify-center items-center text-blue-500 py-4">
+            <Card variant="outlined" className="md:hidden" sx={{ borderColor: theme.palette.primary.main }}>
+              <CardActionArea
+                className="h-full flex flex-row gap-2 justify-center items-center  py-4"
+                sx={{ color: theme.palette.primary.main }}
+              >
                 <AddIcon fontSize="small" /> New Project
               </CardActionArea>
             </Card>

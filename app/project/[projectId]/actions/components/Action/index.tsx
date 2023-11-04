@@ -23,7 +23,7 @@ export default function Action() {
   return (
     <Card>
       <CardContent className="flex flex-col gap-6">
-        <h4 className="m-0 font-semibold">OOOOhhhhhhhh Yeahhhhhhh</h4>
+        <h4 className="m-0 font-semibold">{action.name || "Untitled Action"}</h4>
         <TextField
           value={action.name}
           onChange={(e) => {
@@ -54,6 +54,10 @@ export default function Action() {
           multiline
           maxRows={6}
           minRows={3}
+          inputProps={{
+            maxLength: 2000,
+          }}
+          helperText={<p className="text-right">{action.pitch.length}/2000</p>}
         />
         <TextField
           value={action.firstResponse}

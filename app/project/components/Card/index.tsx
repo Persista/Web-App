@@ -5,6 +5,12 @@ import PublicIcon from "@mui/icons-material/Public";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import Link from "next/link";
 
+interface ProjectCardProps {
+  name: string;
+  actions: number;
+  id: string;
+}
+
 export default function ProjectCard() {
   return (
     <Card>

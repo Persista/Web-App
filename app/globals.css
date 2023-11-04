@@ -15,13 +15,6 @@ h1 {
   font-family: 'Oswald', sans-serif;
 }
 
-* {
-  font-family: "Roboto",
-    "Helvetica",
-    "Arial",
-    sans-serif;
-}
-
 *,
 ::before,
 ::after {
@@ -536,5 +529,26 @@ Ensure the default browser behavior of the `hidden` attribute.
 @media screen and (max-width: 600px) {
   .content {
     padding: 0rem;
+  }
+}
+
+.loader {
+  width: 20px;
+  height: 20px;
+  border: 5px solid currentColor;
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
   }
 }
