@@ -2,28 +2,38 @@
 
 import AddIcon from "@mui/icons-material/Add";
 import { useQuery } from "react-query";
-import { useContext } from "react";
-import SiteContext from "@/app/siteContext";
+import { useContext, useState } from "react";
 import { Card, CardActionArea, Container, useTheme } from "@mui/material";
+
+import SiteContext from "@/app/siteContext";
 import Header from "./components/Header";
 import ProjectCard from "./components/Card";
+import NewProjectModal from "./components/NewProjectModal";
 import { get } from "@/utils/API/request";
 import Loader from "../components/Loader";
 import { Project } from "../types";
 
 export default function Projects() {
   let theme = useTheme();
-  const {user} = useContext(SiteContext);
+  const { user } = useContext(SiteContext);
+  let [open, setOpen] = useState(false);
 
-  const getAllProjects = async () => { 
-    const res = await get(`/admin/${user.id}/projects`);
-    console.log(res.data);
-    return res.data.message;
+  function handleOpen() {
+    setOpen(true);
   }
 
-  let projects = useQuery([user.id, "projects"], getAllProjects);
+  function handleClose() {
+    setOpen(false);
+  }
 
-  if(projects.isLoading) return <Loader/>
+  const getAllProjects = async () => {
+    const res = await get(`/admin/${user.id}/projects`);
+    return res.data.message;
+  };
+
+  let projects = useQuery(["projects"], getAllProjects);
+
+  if (projects.isLoading) return <Loader />;
 
   return (
     <>
@@ -36,14 +46,6 @@ export default function Projects() {
         <Container maxWidth="md" className="md:pt-16 pt-8 relative z-10">
           <h3 className="text-white text-xl font-medium mb-2">Projects</h3>
           <div className="grid md:grid-cols-3 gap-2">
-            <Card variant="outlined" className="md:hidden" sx={{ borderColor: theme.palette.primary.main }}>
-              <CardActionArea
-                className="h-full flex flex-row gap-2 justify-center items-center  py-4"
-                sx={{ color: theme.palette.primary.main }}
-              >
-                <AddIcon fontSize="small" /> New Project
-              </CardActionArea>
-            </Card>
             {projects.data.map((project: Project) => (
               <ProjectCard key={project.id} title={project.title} actions={project.actions} id={project.id} />
             ))}
@@ -51,6 +53,7 @@ export default function Projects() {
               <CardActionArea
                 className="h-full flex flex-row gap-2 justify-center items-center"
                 sx={{ color: theme.palette.primary.main }}
+                onClick={handleOpen}
               >
                 <AddIcon fontSize="small" /> New Project
               </CardActionArea>
@@ -58,6 +61,7 @@ export default function Projects() {
           </div>
         </Container>
       </div>
+      <NewProjectModal open={open} onClose={handleClose} />
     </>
   );
 }

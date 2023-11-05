@@ -5,4 +5,6 @@ export default {
   GOOGLE_AUTH: "/auth/google",
   GITHUB_AUTH: "/auth/github",
   VERIFY: "/auth/verify",
+
+  NEW_PROJECT: "/project",
 };
