@@ -58,7 +58,7 @@ const data = [
 export default function App() {
 	return (
 		<LineChart
-      className="m-60"
+			className="m-60"
 			width={900}
 			height={600}
 			data={data}
