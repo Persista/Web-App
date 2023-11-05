@@ -41,6 +41,8 @@ export default function Action({
     primaryAPIKey,
   });
 
+  console.log(primaryAPIKey);
+
   const threshold = 0.2; // Set your minimum threshold (e.g., -1)
 
   const [value, setValue] = useState([-0.85, 0.85]);
