@@ -42,7 +42,7 @@ export default function DashboardLayout({ children, params }: DashboardLayoutPro
           overflow: "auto",
         }}
       >
-        <DashboardHeader open={open} setOpen={setOpen} title={project.data.title}/>
+        <DashboardHeader open={open} setOpen={setOpen}/>
         {children}
       </Box>
     </Box>

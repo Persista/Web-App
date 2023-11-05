@@ -4,7 +4,7 @@ import { AppBar, Container, Toolbar } from "@mui/material";
 interface DashboardHeaderProps {
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  title: string;
+  title?: string;
 }
 
 export default function DashboardHeader({ open, setOpen, title }: DashboardHeaderProps) {
